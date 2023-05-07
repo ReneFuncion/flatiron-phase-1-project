@@ -1,0 +1,1 @@
+This is a phase-1 project for Flatiron's Fullstack Web Development course.git 
