@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('JavaScript loaded');
     const element = document.getElementById("myElement");
 
-    element.style.left = window.innerWidth - element.offsetWidth;
+    element.style.top = "50px";
+    element.style.right = "50px";
 
 });
 
