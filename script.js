@@ -32,12 +32,19 @@
 //         }
 //     }, 5);
 // });
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('JavaScript loaded');
     const element = document.getElementById("myElement");
-
-    element.style.top = "50px";
-    element.style.right = "50px";
-
+    let position = window.innerWidth;
+    const interval = setInterval(function () {
+        position -= 1;
+        element.style.left = position + "px";
+        if (position <= -element.offsetWidth) {
+            element.style.display = "none";
+        }
+        if (position <= -element.offsetWidth - 10) {
+            clearInterval(interval);
+        }
+    }, 10);
 });
-
