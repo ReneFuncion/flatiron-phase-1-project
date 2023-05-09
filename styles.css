@@ -10,12 +10,16 @@
     overflow: hidden;
 }
 
-#myElement {
-    border: 2px solid black;
+#myElement1,
+#myElement2 {
+    border: 5px solid black;
     padding: 10px;
     background-color: lightgray;
     white-space: nowrap;
     position: absolute;
     left: 100%;
-    /* move the element to the right side of the screen */
+}
+
+#myElement2 {
+    left: 200%;
 }
