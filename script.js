@@ -2,8 +2,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
+    const boxSeparation = 100;
     let leftPosition1 = window.innerWidth;
-    let leftPosition2 = window.innerWidth + myElement1.offsetWidth;
+    let leftPosition2 = window.innerWidth + myElement1.offsetWidth + boxSeparation;
     setInterval(() => {
         leftPosition1--;
         myElement1.style.left = `${leftPosition1}px`;
