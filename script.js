@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetch("https://api.coindesk.com/v1/bpi/currentprice.json")
         .then((resp) => resp.json())
-        .then((data) => console.log(data["bpi"]["GBP"]["rate"]));
+        .then((data) => {
+            console.log(data["bpi"]["GBP"]["rate"]);
+            console.log(data["bpi"]["EUR"]["rate"]);
+        });
 
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
