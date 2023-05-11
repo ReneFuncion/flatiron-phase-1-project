@@ -20,24 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let leftPosition1 = outerContainerWidth;
     let leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
 
-    function moveElement1() {
+    function moveElements() {
         leftPosition1--;
-        myElement1.style.left = `${leftPosition1}px`;
-        if (leftPosition1 <= -myElement1.offsetWidth) {
-            leftPosition1 = window.innerWidth;
-        }
-    }
-    function moveElement2() {
         leftPosition2--;
+
+        myElement1.style.left = `${leftPosition1}px`;
         myElement2.style.left = `${leftPosition2}px`;
-        if (leftPosition2 <= -myElement2.offsetWidth) {
-            leftPosition2 = window.innerWidth;
+
+        if (leftPosition1 <= -myElement1.offsetWidth) {
+            leftPosition1 = outerContainerWidth;
+            leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
         }
     }
-    function scrollElements() {
-        setInterval(moveElement1, scrollSpeed);
-        setInterval(moveElement2, scrollSpeed);
-    }
-    scrollElements();
 
+    setInterval(moveElements, scrollSpeed);
 });
