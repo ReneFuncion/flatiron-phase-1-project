@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const boxSeparation = 200;
     const scrollSpeed = 10;
-    let leftPosition1 = window.innerWidth;
-    let leftPosition2 = window.innerWidth + myElement1.offsetWidth + boxSeparation;
+    let outerContainerWidth = document.getElementById('outerContainer').clientWidth;
+    let leftPosition1 = outerContainerWidth;
+    let leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
 
     function moveElement1() {
         leftPosition1--;
