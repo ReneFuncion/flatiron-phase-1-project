@@ -1,7 +1,10 @@
-img {
-    width: auto;
-    height: 100px;
-    max-width: 100%;
+.headerImage {
+    display: flex;
+    justify-content: center;
+}
+
+#topImage {
+    max-width: 200px;
 }
 
 h1 {
