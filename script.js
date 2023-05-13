@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderWidth: 1,
                     lineTension: 0.3,
+                    pointRadius: 0,
                 },
             ],
         },
