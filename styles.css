@@ -59,10 +59,10 @@ h1 {
 
 #chartContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .chart {
     width: 100%;
-    max-width: 150px;
+    max-width: 200px;
 }
