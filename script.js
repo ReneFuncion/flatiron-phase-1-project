@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
     const prices = [[], [], [], [], []];
+    const symbols = [];
     const chartLocations = [];
     const xAxisLabels = [];
     const chartData = {
@@ -26,6 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
             scales: {
                 y: {
                     beginAtZero: false,
+                    ticks: {
+                        font: {
+                            size: 3,
+                        },
+                    },
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            size: 3,
+                        },
+
+                    },
                 },
 
             },
@@ -37,21 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
         chartLocations.push(e);
     });
 
-    function storePrices(data) {
+    function storeData(data) {
         for (let i = 0; i < 5; i++) {
-            prices[i].push(data[i]["priceUsd"])
+            prices[i].push(data[i]["priceUsd"]);
+            symbols.push(data[i]["symbol"]);
         }
     };
     function updateChart() {
         fetch("https://api.coincap.io/v2/assets")
             .then((resp) => resp.json())
             .then((jsonData) => {
-                storePrices(jsonData["data"]);
+                storeData(jsonData["data"]);
             }
             );
         xAxisLabels.push(dataCount);
         dataCount++;
         prices.forEach((e, i) => {
+            chartData.data.datasets[0].label = symbols[i];
             chartData.data.datasets[0].data = e;
             chartData.data.labels = xAxisLabels;
             new Chart(chartLocations[i], chartData);
