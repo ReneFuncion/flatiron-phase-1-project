@@ -1,5 +1,14 @@
-.headerImage {
+#headContainer {
     display: flex;
+    justify-content: center;
+}
+
+#headContainer>div:nth-child(2) {
+    display: flex;
+    align-items: center;
+}
+
+.headerImage {
     justify-content: center;
 }
 
@@ -8,18 +17,15 @@
 }
 
 h1 {
+    /*align-self: center;*/
+    background-color: gold;
     text-align: center;
     margin: 0%;
-
 }
 
 h4 {
     text-align: center;
-
 }
-
-
-
 
 #outerContainer {
     position: relative;
