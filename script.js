@@ -1,16 +1,36 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+    let dataCount = 0;
+    const prices = [[], [], [], [], []];
+    const xAxisLabels = [];
 
-    fetch("https://api.coindesk.com/v1/bpi/currentprice.json")
+
+    fetch("https://api.coincap.io/v2/assets")
         .then((resp) => resp.json())
-        .then((data) => {
-            postCurrentPrices(data);
-        });
+        .then((jsonData) => {
+            storePrices(jsonData["data"]);
+        }
+        );
 
-    function postCurrentPrices(prices) {
-        document.getElementById('myElement1').textContent = prices["bpi"]["USD"]["rate_float"];
-        document.getElementById('myElement2').textContent = prices["bpi"]["GBP"]["rate_float"];
+    function storePrices(data) {
+        for (let i = 0; i < 5; i++) {
+            prices[i].push(data[i]["priceUsd"])
+        }
     }
+    xAxisLabels.push(dataCount);
+    dataCount++;
+
+
+
+
+
+    function updateTicker(price) {
+        const newPrice = price[price.length - 1];
+        document.getElementById('myElement1').textContent = Math.floor(newPrice);
+        document.getElementById('myElement2').textContent = "Rene";
+    }
+    updateTicker(prices[0]);
+
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
 

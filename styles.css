@@ -12,10 +12,6 @@
     justify-content: center;
 }
 
-#topImage {
-    max-width: 200px;
-}
-
 h1 {
     /*align-self: center;*/
     background-color: gold;
@@ -23,8 +19,8 @@ h1 {
     margin: 0%;
 }
 
-h4 {
-    text-align: center;
+#topImage {
+    max-width: 200px;
 }
 
 #outerContainer {
@@ -59,4 +55,14 @@ h4 {
 
 #myElement2 {
     left: 200%;
+}
+
+#chartContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.chart {
+    width: 100%;
+    max-width: 150px;
 }
