@@ -2,9 +2,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
     const prices = [[], [], [], [], []];
+    const chartLocations = [];
     const xAxisLabels = [];
 
 
+    const allCanvasElements = document.querySelectorAll('.chart');
+    allCanvasElements.forEach((e) => {
+        chartLocations.push(e);
+    });
+
+
+    function storePrices(data) {
+        for (let i = 0; i < 5; i++) {
+            prices[i].push(data[i]["priceUsd"])
+        }
+    }
     fetch("https://api.coincap.io/v2/assets")
         .then((resp) => resp.json())
         .then((jsonData) => {
@@ -12,11 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         );
 
-    function storePrices(data) {
-        for (let i = 0; i < 5; i++) {
-            prices[i].push(data[i]["priceUsd"])
-        }
-    }
+
     xAxisLabels.push(dataCount);
     dataCount++;
 
