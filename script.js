@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
     const prices = [[], [], [], [], []];
-    const symbols = [];
+    const symbols = ["-", "-", "-", "-", "-"];
     const chartLocations = [];
     const xAxisLabels = [];
     const chartData = {
@@ -53,8 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function storeData(data) {
         for (let i = 0; i < 5; i++) {
-            prices[i].push(data[i]["priceUsd"]);
-            symbols.push(data[i]["symbol"]);
+            const priceFloat = parseFloat(parseFloat(data[i]["priceUsd"]).toFixed(3));
+            prices[i].push(priceFloat);
+            symbols[i] = data[i]["symbol"];
         }
     };
     function updateChart() {
@@ -64,6 +65,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 storeData(jsonData["data"]);
             }
             );
+
+        const elementBTC = document.getElementById('myElement1');
+        const lenBtc = prices[0].length;
+        elementBTC.textContent = "BTC " + prices[0][lenBtc - 1];
+        if (lenBtc == 0) {
+            elementBTC.style.backgroundColor = "lightgreen";
+        } else if (prices[0][lenBtc - 1] > prices[0][lenBtc - 2]) {
+            elementBTC.style.backgroundColor = "lightgreen";
+        } else {
+            elementBTC.style.backgroundColor = "red";
+        }
+
+        const elementETH = document.getElementById('myElement2');
+        const lenETH = prices[1].length;
+        elementETH.textContent = "ETH " + prices[1][lenETH - 1];
+        if (lenETH == 0) {
+            elementETH.style.backgroundColor = "lightgreen";
+        } else if (prices[1][lenETH - 1] > prices[1][lenETH - 2]) {
+            elementETH.style.backgroundColor = "lightgreen";
+        } else {
+            elementETH.style.backgroundColor = "red";
+        }
+
         xAxisLabels.push(dataCount);
         dataCount++;
         prices.forEach((e, i) => {
@@ -74,17 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         );
     }
-
-
-
-
-
-    function updateTicker(price) {
-        const newPrice = price[price.length - 1];
-        document.getElementById('myElement1').textContent = Math.floor(newPrice);
-        document.getElementById('myElement2').textContent = "Rene";
-    }
-    updateTicker(prices[0]);
 
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
