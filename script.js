@@ -4,29 +4,59 @@ document.addEventListener('DOMContentLoaded', () => {
     const prices = [[], [], [], [], []];
     const chartLocations = [];
     const xAxisLabels = [];
+    const chartData = {
+        type: 'line',
+        data: {
+            labels: xAxisLabels,
+            datasets: [
+                {
+                    fill: false,
+                    label: 'BTC',
+                    data: prices[0],
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1,
+                    lineTension: 2,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                },
 
+            },
+        },
+    };
 
     const allCanvasElements = document.querySelectorAll('.chart');
     allCanvasElements.forEach((e) => {
         chartLocations.push(e);
     });
 
-
     function storePrices(data) {
         for (let i = 0; i < 5; i++) {
             prices[i].push(data[i]["priceUsd"])
         }
-    }
-    fetch("https://api.coincap.io/v2/assets")
-        .then((resp) => resp.json())
-        .then((jsonData) => {
-            storePrices(jsonData["data"]);
+    };
+    function updateChart() {
+        fetch("https://api.coincap.io/v2/assets")
+            .then((resp) => resp.json())
+            .then((jsonData) => {
+                storePrices(jsonData["data"]);
+            }
+            );
+        xAxisLabels.push(dataCount);
+        dataCount++;
+        prices.forEach((e, i) => {
+            chartData.data.datasets[0].data = e;
+            chartData.data.labels = xAxisLabels;
+            new Chart(chartLocations[i], chartData);
         }
         );
-
-
-    xAxisLabels.push(dataCount);
-    dataCount++;
+    }
 
 
 
@@ -60,6 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
             leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
         }
     }
-
+    setInterval(updateChart, 10000);
     setInterval(moveElements, scrollSpeed);
 });
