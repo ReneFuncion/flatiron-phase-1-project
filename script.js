@@ -1,9 +1,14 @@
+//const { Chart } = require("chart.js");
 
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
     const prices = [[], [], [], [], []];
+    const pricesBtc = prices[0];
+    const pricesEth = prices[1];
     const symbols = ["-", "-", "-", "-", "-"];
     const chartLocations = [];
+    const chartLocationBtc = chartLocations[0];
+    const chartLocationEth = chartLocations[1];
     const xAxisLabels = [];
     const chartData = {
         type: 'line',
@@ -50,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     allCanvasElements.forEach((e) => {
         chartLocations.push(e);
     });
+
+    const bigChartContainer = document.getElementById('bigChartContainer');
+    const canvasElement = bigChartContainer.querySelector('canvas.chart');
     //This function will round off the prices to decimal places
     function limitDecimalOutput(num) {
         const limitDecimalPlaces = 4;
@@ -68,10 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
             elementBTC.style.backgroundColor = "red";
         }
     }
+
     function updateXAxisLabels() {
         xAxisLabels.push(dataCount);
         dataCount++;
     }
+
     function updateTickerEth() {
         const elementETH = document.getElementById('myElement2');
         const lenETH = prices[1].length;
@@ -91,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             prices[i].push(data[i]["priceUsd"]);
             symbols[i] = data[i]["symbol"];
         }
-    };
+    }
+
     function updatePrices() {
         fetch("https://api.coincap.io/v2/assets")
             .then((resp) => resp.json())
@@ -104,8 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTickerEth();
         updateXAxisLabels();
 
-
-
         prices.forEach((e, i) => {
             chartData.data.datasets[0].label = symbols[i];
             chartData.data.datasets[0].data = e;
@@ -113,7 +122,19 @@ document.addEventListener('DOMContentLoaded', () => {
             new Chart(chartLocations[i], chartData);
         }
         );
+
+        plotMain();
+
     }
+
+    function plotMain() {
+        chartData.data.datasets[0].label = symbols[0];
+        chartData.data.datasets[0].data = prices[0];
+        chartData.data.labels = xAxisLabels;
+        new Chart(canvasElement, chartData);
+    }
+
+
 
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
@@ -125,6 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
 
     function moveElements() {
+
+
         leftPosition1--;
         leftPosition2--;
 
@@ -138,4 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setInterval(updatePrices, 10000);
     setInterval(moveElements, scrollSpeed);
+    //plotChartBTC();
+
 });
