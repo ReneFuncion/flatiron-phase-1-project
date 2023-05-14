@@ -50,11 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
     allCanvasElements.forEach((e) => {
         chartLocations.push(e);
     });
+    //This function will round off the prices to decimal places
+    function limitDecimalOutput(num) {
+        const limitDecimalPlaces = 4;
+        return parseFloat(parseFloat(num).toFixed(limitDecimalPlaces));
+    }
 
     function storeData(data) {
+
         for (let i = 0; i < 5; i++) {
-            const priceFloat = parseFloat(parseFloat(data[i]["priceUsd"]).toFixed(3));
-            prices[i].push(priceFloat);
+            prices[i].push(data[i]["priceUsd"]);
             symbols[i] = data[i]["symbol"];
         }
     };
@@ -68,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const elementBTC = document.getElementById('myElement1');
         const lenBtc = prices[0].length;
-        elementBTC.textContent = "BTC " + prices[0][lenBtc - 1];
+        elementBTC.textContent = "BTC " + limitDecimalOutput(prices[0][lenBtc - 1]);
         if (lenBtc == 0) {
             elementBTC.style.backgroundColor = "lightgreen";
         } else if (prices[0][lenBtc - 1] > prices[0][lenBtc - 2]) {
@@ -79,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const elementETH = document.getElementById('myElement2');
         const lenETH = prices[1].length;
-        elementETH.textContent = "ETH " + prices[1][lenETH - 1];
+        elementETH.textContent = "ETH " + limitDecimalOutput(prices[1][lenETH - 1]);
         if (lenETH == 0) {
             elementETH.style.backgroundColor = "lightgreen";
         } else if (prices[1][lenETH - 1] > prices[1][lenETH - 2]) {
@@ -102,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
 
-    const boxSeparation = 200;
+    const boxSeparation = 400;
     const scrollSpeed = 10;
     let outerContainerWidth = document.getElementById('outerContainer').clientWidth;
     let leftPosition1 = outerContainerWidth;

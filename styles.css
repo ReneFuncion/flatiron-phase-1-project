@@ -64,5 +64,14 @@ h1 {
 
 .chart {
     width: 100%;
-    max-width: 200px;
+    height: 150px;
+}
+
+#bigChartContainer {
+    display: flex;
+}
+
+#bigChartContainer .chart {
+    height: 250px;
+    flex: 0 0 70%
 }
