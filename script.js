@@ -56,21 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return parseFloat(parseFloat(num).toFixed(limitDecimalPlaces));
     }
 
-    function storeData(data) {
-
-        for (let i = 0; i < 5; i++) {
-            prices[i].push(data[i]["priceUsd"]);
-            symbols[i] = data[i]["symbol"];
-        }
-    };
-    function updateChart() {
-        fetch("https://api.coincap.io/v2/assets")
-            .then((resp) => resp.json())
-            .then((jsonData) => {
-                storeData(jsonData["data"]);
-            }
-            );
-
+    function updateTickerBtc() {
         const elementBTC = document.getElementById('myElement1');
         const lenBtc = prices[0].length;
         elementBTC.textContent = "BTC " + limitDecimalOutput(prices[0][lenBtc - 1]);
@@ -81,7 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             elementBTC.style.backgroundColor = "red";
         }
-
+    }
+    function updateXAxisLabels() {
+        xAxisLabels.push(dataCount);
+        dataCount++;
+    }
+    function updateTickerEth() {
         const elementETH = document.getElementById('myElement2');
         const lenETH = prices[1].length;
         elementETH.textContent = "ETH " + limitDecimalOutput(prices[1][lenETH - 1]);
@@ -92,9 +83,29 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             elementETH.style.backgroundColor = "red";
         }
+    }
 
-        xAxisLabels.push(dataCount);
-        dataCount++;
+    function storeData(data) {
+
+        for (let i = 0; i < 5; i++) {
+            prices[i].push(data[i]["priceUsd"]);
+            symbols[i] = data[i]["symbol"];
+        }
+    };
+    function updatePrices() {
+        fetch("https://api.coincap.io/v2/assets")
+            .then((resp) => resp.json())
+            .then((jsonData) => {
+                storeData(jsonData["data"]);
+            }
+            );
+
+        updateTickerBtc();
+        updateTickerEth();
+        updateXAxisLabels();
+
+
+
         prices.forEach((e, i) => {
             chartData.data.datasets[0].label = symbols[i];
             chartData.data.datasets[0].data = e;
@@ -125,6 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
             leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
         }
     }
-    setInterval(updateChart, 10000);
+    setInterval(updatePrices, 10000);
     setInterval(moveElements, scrollSpeed);
 });
