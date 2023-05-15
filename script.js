@@ -1,15 +1,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
-    const prices = [[], [], [], [], []];
-    const pricesBtc = prices[0];
-    const pricesEth = prices[1];
-    const symbols = ["-", "-", "-", "-", "-"];
-    const chartLocations = [];
-    const chartLocationBtc = chartLocations[0];
-    const chartLocationEth = chartLocations[1];
-    const xAxisLabels = [];
-    const chartData = {
+
+    const prices = [[], [], [], [], []];    //A simple database for prices
+    // const pricesBtc = prices[0];
+    // const pricesEth = prices[1];
+    const symbols = ["-", "-", "-", "-", "-"];      //Names of the  crypto instruments
+    const chartLocations = [];      //The DOM locations for the charts
+    // const chartLocationBtc = chartLocations[0];
+    // const chartLocationEth = chartLocations[1];
+    const xAxisLabels = [];         //Labels for x axis
+    const chartData = {             //The data format to plot in Chart.js
         type: 'line',
         data: {
             labels: xAxisLabels,
@@ -49,19 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         },
     };
-
+    //The dom locations of the charts to be plotted
     const allCanvasElements = document.querySelectorAll('.chart');
     allCanvasElements.forEach((e) => {
         chartLocations.push(e);
     });
-
+    //Location of the final large plot at the bottom of the webpage
     const canvasElement = document.getElementById('lastCanvas');
-
+    //The crypto prices are very long.  Plots based on the full prices.  Displayed on the ticker prices are shorter
     function limitDecimalOutput(num) {
         const limitDecimalPlaces = 4;
         return parseFloat(parseFloat(num).toFixed(limitDecimalPlaces));
     }
-
+    //Put the prices in the scrolling box and change the background if prices going up or down
     function updateTickerBtc() {
         const elementBTC = document.getElementById('myElement1');
         const lenBtc = prices[0].length;
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         xAxisLabels.push(dataCount);
         dataCount++;
     }
-
+    //Put the etherium prices on the moving box with the correct trending color
     function updateTickerEth() {
         const elementETH = document.getElementById('myElement2');
         const lenETH = prices[1].length;
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elementETH.style.backgroundColor = "red";
         }
     }
-
+    //Update the small database of prices.  An array of arrays
     function storeData(data) {
 
         for (let i = 0; i < 5; i++) {
@@ -100,7 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
             symbols[i] = data[i]["symbol"];
         }
     }
-
+    //The heart of the program.  fetch the data and using setInterval at the bottom 
+    //keep fetching every 10 secs.  I could update every sec. but its pointless and 
+    //the owners might get mad.  and late at night not a lot of trades happening 
+    //so prices flatline.  As time progresses the chart become more detailed because 
+    // more data points
     function updatePrices() {
         fetch("https://api.coincap.io/v2/assets")
             .then((resp) => resp.json())
@@ -112,15 +117,19 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTickerBtc();
         updateTickerEth();
         updateXAxisLabels();
-
+        //This forEach will enter the template data of Chart.js and sequentially plot the charts on 
+        //the screen
         prices.forEach((e, i) => {
             chartData.data.datasets[0].label = symbols[i];
             chartData.data.datasets[0].data = e;
             chartData.data.labels = xAxisLabels;
-            new Chart(chartLocations[i], chartData);
+            new Chart(chartLocations[i], chartData);        //actual charting here
         }
         );
     }
+
+    //Add an event listener to all five charts.  Clicking on any of the small charts at the top will produce
+    //a large full chart of the clicked instrument at the bottom 
     allCanvasElements.forEach((e, index) => {
         chartLocations.push(e);
         e.addEventListener('click', () => {
@@ -130,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    //Plot the big chart that the user clicked on
     function updateMainChart() {
         if (boe === 1) {
             plotMainBtc();
@@ -144,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //Feeding the chart data for Chart.js to plot each instrument. There are five instruments.
+    //There is a pattern to feed data to Chart.js I used the simplest one I could run successfully.
     function plotMainBtc() {
         chartData.data.datasets[0].label = symbols[0];
         chartData.data.datasets[0].data = prices[0];
@@ -175,15 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(canvasElement, chartData);
     }
 
-    const myElement1 = document.getElementById('myElement1');
-    const myElement2 = document.getElementById('myElement2');
+    const myElement1 = document.getElementById('myElement1'); //first bos to hold bitcoin scrolling across
+    const myElement2 = document.getElementById('myElement2');   //second box to hold etherium scrolling 
 
     const boxSeparation = 400;
     const scrollSpeed = 10;
+    //determine the lenght of the containing element for the two boxes to be scrolled
     let outerContainerWidth = document.getElementById('outerContainer').clientWidth;
+    //first box at the start  every time the animation repeats inside setInterval fucntion
     let leftPosition1 = outerContainerWidth;
+    //start of the second box is right behind the first box.  Therefore the length of the first box is needed
+    //or the boxes will overlap.  Boxseparation is to keep them apart
     let leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
-
+    //Running this function repeatedly using setInterval to animate the boxes moving
     function moveElements() {
         leftPosition1--;
         leftPosition2--;
@@ -195,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
         }
     }
-    setInterval(updatePrices, 10000);
-    setInterval(moveElements, scrollSpeed);
+    //Function to repeat certain actions
+    setInterval(updatePrices, 10000);  //repeatedly run fetch every 10secs
+    setInterval(moveElements, scrollSpeed);  //scroll the ticker display from  right to left
 });
