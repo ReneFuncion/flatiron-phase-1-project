@@ -67,6 +67,7 @@ h1 {
     height: 150px;
 }
 
+/*
 #bigChartContainer {
     display: flex;
 }
@@ -74,4 +75,15 @@ h1 {
 #bigChartContainer .chart {
     height: 250px;
     flex: 0 0 70%
+}
+*/
+
+#bigChartContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#lastCanvas {
+    width: 100%;
+    height: 10px;
 }

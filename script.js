@@ -1,4 +1,3 @@
-//const { Chart } = require("chart.js");
 
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
@@ -56,9 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chartLocations.push(e);
     });
 
-    const bigChartContainer = document.getElementById('bigChartContainer');
-    const canvasElement = bigChartContainer.querySelector('canvas.chart');
-    //This function will round off the prices to decimal places
+    const canvasElement = document.getElementById('lastCanvas');
+
     function limitDecimalOutput(num) {
         const limitDecimalPlaces = 4;
         return parseFloat(parseFloat(num).toFixed(limitDecimalPlaces));
@@ -123,16 +121,77 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         );
 
-        plotMain();
+        // let boe = 5;
+        // if (boe == 1) {
+        //     plotMainBtc();
+        // } else if (boe == 2) {
+        //     plotMainEth();
+        // } else if (boe == 3) {
+        //     plotMainEthUsdt();
+        // } else if (boe == 4) {
+        //     plotMainBnb();
+        // } else if (boe == 5) {
+        //     plotMainUsdc();
+        // }
 
     }
+    allCanvasElements.forEach((e, index) => {
+        chartLocations.push(e);
+        e.addEventListener('click', () => {
+            boe = index + 1;
+            console.log('boe:', boe);
+            updateMainChart();
+        });
+    });
 
-    function plotMain() {
+    function updateMainChart() {
+        if (boe === 1) {
+            plotMainBtc();
+        } else if (boe === 2) {
+            plotMainEth();
+        } else if (boe === 3) {
+            plotMainEthUsdt();
+        } else if (boe === 4) {
+            plotMainBnb();
+        } else if (boe === 5) {
+            plotMainUsdc();
+        }
+    }
+
+
+    function plotMainBtc() {
         chartData.data.datasets[0].label = symbols[0];
         chartData.data.datasets[0].data = prices[0];
         chartData.data.labels = xAxisLabels;
         new Chart(canvasElement, chartData);
     }
+    function plotMainEth() {
+        chartData.data.datasets[0].label = symbols[1];
+        chartData.data.datasets[0].data = prices[1];
+        chartData.data.labels = xAxisLabels;
+        new Chart(canvasElement, chartData);
+    }
+    function plotMainEthUsdt() {
+        chartData.data.datasets[0].label = symbols[2];
+        chartData.data.datasets[0].data = prices[2];
+        chartData.data.labels = xAxisLabels;
+        new Chart(canvasElement, chartData);
+    }
+    function plotMainBnb() {
+        chartData.data.datasets[0].label = symbols[3];
+        chartData.data.datasets[0].data = prices[3];
+        chartData.data.labels = xAxisLabels;
+        new Chart(canvasElement, chartData);
+    }
+    function plotMainUsdc() {
+        chartData.data.datasets[0].label = symbols[4];
+        chartData.data.datasets[0].data = prices[4];
+        chartData.data.labels = xAxisLabels;
+        new Chart(canvasElement, chartData);
+    }
+
+
+
 
 
 
