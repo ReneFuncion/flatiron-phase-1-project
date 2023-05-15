@@ -25,7 +25,7 @@ Technologies Used
 - Chart.js
 
 How to Use
-1. Open the webpage
+1. Open the webpage.  No installation required.
 2. Observe the scrolling ticker tape at the top showing real-time cryptocurrency prices
 3. View the five small line charts below the ticker tape, each representing a different cryptocurrency
 4. Click on any small chart to display a larger version of the chart below
@@ -33,3 +33,26 @@ How to Use
 
 Conclusion
 Working on this project was an enjoyable experience. Seeing the prices change on the charts in real time was unbelievably satisfying. In addition, this project allowed me to explore and learn more about web development, and I look forward to applying these skills to future projects.
+
+
+MIT License
+
+Copyright (c) 2023 Rene Funcion
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
