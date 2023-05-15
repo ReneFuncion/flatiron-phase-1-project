@@ -120,20 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             new Chart(chartLocations[i], chartData);
         }
         );
-
-        // let boe = 5;
-        // if (boe == 1) {
-        //     plotMainBtc();
-        // } else if (boe == 2) {
-        //     plotMainEth();
-        // } else if (boe == 3) {
-        //     plotMainEthUsdt();
-        // } else if (boe == 4) {
-        //     plotMainBnb();
-        // } else if (boe == 5) {
-        //     plotMainUsdc();
-        // }
-
     }
     allCanvasElements.forEach((e, index) => {
         chartLocations.push(e);
@@ -157,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
             plotMainUsdc();
         }
     }
-
 
     function plotMainBtc() {
         chartData.data.datasets[0].label = symbols[0];
@@ -190,11 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(canvasElement, chartData);
     }
 
-
-
-
-
-
     const myElement1 = document.getElementById('myElement1');
     const myElement2 = document.getElementById('myElement2');
 
@@ -205,11 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let leftPosition2 = outerContainerWidth + myElement1.offsetWidth + boxSeparation;
 
     function moveElements() {
-
-
         leftPosition1--;
         leftPosition2--;
-
         myElement1.style.left = `${leftPosition1}px`;
         myElement2.style.left = `${leftPosition2}px`;
 
@@ -220,6 +197,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setInterval(updatePrices, 10000);
     setInterval(moveElements, scrollSpeed);
-    //plotChartBTC();
-
 });
