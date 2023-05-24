@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
     const prices = [[], [], [], [], []];    //A simple database for prices
@@ -75,10 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     plotChart(chartLocations[i], xAxisLabels, symbols[i], prices[i]);
                 }
             });
-
-
     }
 
+    //Add an event listener to all five charts.  Clicking on any of the small charts at the top will produce
+    //a large full chart of the clicked instrument at the bottom 
     allCanvasElements.forEach((e, index) => {
         console.log("inside foreach: " + e);
         e.addEventListener('click', () => {
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         data: dataSet,
                         borderColor: 'rgb(255, 99, 132)',
                         backgroundColor: 'rgb(255, 99, 132)',
-                        borderWidth: 1,
+                        borderWidth: 2,
                         lineTension: 0.3,
                         pointRadius: 0,
                     },
@@ -128,14 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         });
     }
-
-    //Add an event listener to all five charts.  Clicking on any of the small charts at the top will produce
-    //a large full chart of the clicked instrument at the bottom 
-    // allCanvasElements.forEach((e, index) => {
-    //     e.addEventListener('click', () => {
-    //         plotChart(canvasElement, xAxisLabels, symbols[index], prices[index]);
-    //     });
-    // });
 
     const myElement1 = document.getElementById('myElement1'); //first bos to hold bitcoin scrolling across
     const myElement2 = document.getElementById('myElement2');   //second box to hold etherium scrolling 
