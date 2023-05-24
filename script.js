@@ -1,55 +1,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     let dataCount = 0;
-
     const prices = [[], [], [], [], []];    //A simple database for prices
-    // const pricesBtc = prices[0];
-    // const pricesEth = prices[1];
     const symbols = ["-", "-", "-", "-", "-"];      //Names of the  crypto instruments
     const chartLocations = [];      //The DOM locations for the charts
-    // const chartLocationBtc = chartLocations[0];
-    // const chartLocationEth = chartLocations[1];
     const xAxisLabels = [];         //Labels for x axis
-    const chartData = {             //The data format to plot in Chart.js
-        type: 'line',
-        data: {
-            labels: xAxisLabels,
-            datasets: [
-                {
-                    fill: false,
-                    label: 'BTC',
-                    data: prices[0],
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderWidth: 1,
-                    lineTension: 0.3,
-                    pointRadius: 0,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        font: {
-                            size: 3,
-                        },
-                    },
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 3,
-                        },
 
-                    },
-                },
-
-            },
-        },
-    };
     //The dom locations of the charts to be plotted
     const allCanvasElements = document.querySelectorAll('.chart');
     allCanvasElements.forEach((e) => {
@@ -111,81 +67,75 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((resp) => resp.json())
             .then((jsonData) => {
                 storeData(jsonData["data"]);
-            }
-            );
+                updateTickerBtc();
+                updateTickerEth();
+                updateXAxisLabels();
 
-        updateTickerBtc();
-        updateTickerEth();
-        updateXAxisLabels();
-        //This forEach will enter the template data of Chart.js and sequentially plot the charts on 
-        //the screen
-        prices.forEach((e, i) => {
-            chartData.data.datasets[0].label = symbols[i];
-            chartData.data.datasets[0].data = e;
-            chartData.data.labels = xAxisLabels;
-            new Chart(chartLocations[i], chartData);        //actual charting here
-        }
-        );
+                for (let i = 0; i < 5; i++) {
+                    plotChart(chartLocations[i], xAxisLabels, symbols[i], prices[i]);
+                }
+            });
+
+
+    }
+
+    allCanvasElements.forEach((e, index) => {
+        console.log("inside foreach: " + e);
+        e.addEventListener('click', () => {
+            plotChart(canvasElement, xAxisLabels, symbols[index], prices[index]);
+        });
+    });
+
+    function plotChart(chartLocation, xAxis, symbol, dataSet) {
+        new Chart(chartLocation, {
+            type: 'line',
+            data: {
+                labels: xAxis,
+                datasets: [
+                    {
+                        fill: false,
+                        label: symbol,
+                        data: dataSet,
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderWidth: 1,
+                        lineTension: 0.3,
+                        pointRadius: 0,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            font: {
+                                size: 3,
+                            },
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 3,
+                            },
+
+                        },
+                    },
+
+                },
+            },
+        });
     }
 
     //Add an event listener to all five charts.  Clicking on any of the small charts at the top will produce
     //a large full chart of the clicked instrument at the bottom 
-    allCanvasElements.forEach((e, index) => {
-        chartLocations.push(e);
-        e.addEventListener('click', () => {
-            boe = index + 1;
-            console.log('boe:', boe);
-            updateMainChart();
-        });
-    });
-
-    //Plot the big chart that the user clicked on
-    function updateMainChart() {
-        if (boe === 1) {
-            plotMainBtc();
-        } else if (boe === 2) {
-            plotMainEth();
-        } else if (boe === 3) {
-            plotMainEthUsdt();
-        } else if (boe === 4) {
-            plotMainBnb();
-        } else if (boe === 5) {
-            plotMainUsdc();
-        }
-    }
-
-    //Feeding the chart data for Chart.js to plot each instrument. There are five instruments.
-    //There is a pattern to feed data to Chart.js I used the simplest one I could run successfully.
-    function plotMainBtc() {
-        chartData.data.datasets[0].label = symbols[0];
-        chartData.data.datasets[0].data = prices[0];
-        chartData.data.labels = xAxisLabels;
-        new Chart(canvasElement, chartData);
-    }
-    function plotMainEth() {
-        chartData.data.datasets[0].label = symbols[1];
-        chartData.data.datasets[0].data = prices[1];
-        chartData.data.labels = xAxisLabels;
-        new Chart(canvasElement, chartData);
-    }
-    function plotMainEthUsdt() {
-        chartData.data.datasets[0].label = symbols[2];
-        chartData.data.datasets[0].data = prices[2];
-        chartData.data.labels = xAxisLabels;
-        new Chart(canvasElement, chartData);
-    }
-    function plotMainBnb() {
-        chartData.data.datasets[0].label = symbols[3];
-        chartData.data.datasets[0].data = prices[3];
-        chartData.data.labels = xAxisLabels;
-        new Chart(canvasElement, chartData);
-    }
-    function plotMainUsdc() {
-        chartData.data.datasets[0].label = symbols[4];
-        chartData.data.datasets[0].data = prices[4];
-        chartData.data.labels = xAxisLabels;
-        new Chart(canvasElement, chartData);
-    }
+    // allCanvasElements.forEach((e, index) => {
+    //     e.addEventListener('click', () => {
+    //         plotChart(canvasElement, xAxisLabels, symbols[index], prices[index]);
+    //     });
+    // });
 
     const myElement1 = document.getElementById('myElement1'); //first bos to hold bitcoin scrolling across
     const myElement2 = document.getElementById('myElement2');   //second box to hold etherium scrolling 
