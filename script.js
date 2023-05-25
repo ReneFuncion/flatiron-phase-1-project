@@ -108,19 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 scales: {
                     y: {
                         beginAtZero: false,
-                        ticks: {
-                            font: {
-                                size: 3,
-                            },
-                        },
+                        // ticks: {
+                        //     font: {
+                        //         size: 3,
+                        //     },
+                        // },
                     },
                     x: {
-                        ticks: {
-                            font: {
-                                size: 3,
-                            },
-
-                        },
+                        beginAtZero: false,
+                        // ticks: {
+                        //     font: {
+                        //         size: 3,
+                        //     },
+                        // },
                     },
 
                 },
